@@ -21,7 +21,7 @@ class DevelopmentConfig(BaseConfig):
     BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(
-        os.path.join(basedir, 'dev.db'))
+        os.path.join(basedir, 'nlpfinal.db'))
     DEBUG_TB_ENABLED = True
 
 

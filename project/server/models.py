@@ -7,6 +7,29 @@ from flask import current_app
 
 from project.server import db, bcrypt
 
+class Artist(db.Model):
+    __tablename__ = 'artist'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name =  db.Column(db.String(255), unique=True, nullable=False)
+    api_path = db.Column(db.String(255), unique=True, nullable=False)
+    songs = db.relationship('Song')
+
+    def __init__(self, name, api_path):
+        self.name = name
+        self.api_path = api_path
+    
+class Song(db.Model):
+    __tablename__ = 'song'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(255), nullable=False)
+    lyrics = db.Column(db.Text, nullable=False)
+    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+
+    def __init__(self, title, lyrics):
+        self.title = title
+        self.lyrics = lyrics
 
 class User(db.Model):
 
