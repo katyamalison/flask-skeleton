@@ -3,10 +3,55 @@
 
 {% block content %}
 
-  <header class="content-header">
-    <h1>Results</h1>
-  </header>
+  {% if artists %}
+  <div class="modal-body row">
+    {% for artist in artists: %}
+    <div class="col-md-6">
+      <div class="span12">
+        <header class="content-header">
+          <h1 class="text-center">{{ artist.name }}</h1>
+        </header>
+        <br>
+        <img src="{{ artist.image_url }}" alt={{ artist.name }}
+             width="500" height="300"/>
+        <br>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Lyrical Topics</th>
+              <td>{{ artist.unique_words }}</td>
+              <td>This artist uses more unique words and complex
+              structures than average.</td>
+            </tr>
+            <tr>
+              <th scope="row">Alliteration</th>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">POV</th>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row">Repetitiveness</th>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-  <br>
-
-{% endblock content %}
+  {% endblock content %}

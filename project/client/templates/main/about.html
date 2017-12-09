@@ -3,9 +3,98 @@
 {% block content %}
 
 <div class="body-content">
-  <div class="row">
-    <h1>About</h1>
-  </div>
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Overview</h2>
+          <p class="lead">Initially, my goal was to compare the
+            lyrical content of the bands Pavement and Smashing
+            Pumpkins, to solve their decades-old beef and determine
+            which band was the better band. I realized that it would
+            be misrepresentative to use only lyrics from the two
+            bands- context is important. Unfortunately, there are no
+            readily accessible datasets of song lyrics on the
+            internet that could be used for my goals. The closest
+            thing was a bag-of-words dataset that was really outdated
+            and contained no information of genre or release
+            year. Thus, I had to compile the data myself, and doing
+            so led me to a broader, more interesting project. </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>The data</h2>
+          <p class="lead">Compiled using a variety of sources:</p>
+          <ul>
+            <li>Billboard API</li>
+            <li>Genius lyrics API + web scraping</li>
+            <li>Lastfm API</li>
+            <li>Bing API for images</li>
+          </ul>
+          <p class="lead">I started by getting the Billboard Hot 100
+            chart from May 12th of every year between 1970 and 2017,
+            and making a set of the artists on those charts. Using
+            the artist names, I was able to find a list of songs by
+            said artist using the Genius API, and scraped the lyrics
+            from the webpage. I used the Lastfm api to get genre tags
+            for each artist. This shit takes forever to run, but the resulting database:</p>
+          <ul>
+            <li>Over 1,000 of the most popular artists from the
+              past ~50 years</li>
+            <li>Top 25 most popular songs per artist</li>
+            <li>Information on genre and release year</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Looking at the lyrics</h2>
+          <p class="lead">Lyrics can be vital to a listener's overall
+            impression of a song, but I daresay the actual *sound* of a
+            song is more important. The characteristics I ultimately
+            sought out were based on what I look for in lyrics.</p>
+          <ul class="list-group">
+            <li class="list-group-item">Point of view</li>
+            <li class="list-group-item">Alliteration</li>
+            <li class="list-group-item">Topically unique (song)</li>
+            <li class="list-group-item">Topically diverse (artist)</li>
+            <li class="list-group-item">Repetitiveness</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="improvements">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Improvements</h2>
+          <p class="lead">Some characteristics I would like to add to
+            the analysis:</p>
+          <ul class="list-group">
+            <li class="list-group-item">Narrative</li>
+            <li class="list-group-item">Metaphor detection</li>
+            <li class="list-group-item">Cliche</li>
+          </ul>
+          <p class="lead">Additionally, I think there should be
+          another view so users can explore the data, not just compare
+          two artists.</p>          
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 {% endblock %}

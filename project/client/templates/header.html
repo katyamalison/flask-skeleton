@@ -15,7 +15,7 @@
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url_for('main.about') }}">About</a></li>
           {% if current_user.is_authenticated %}
            <li><a href="{{ url_for('user.members') }}">Members</a></li>

@@ -11,13 +11,27 @@ class Artist(db.Model):
     __tablename__ = 'artist'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name =  db.Column(db.String(255), unique=True, nullable=False)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    year = db.Column(db.Integer)
     api_path = db.Column(db.String(255), unique=True, nullable=False)
     songs = db.relationship('Song')
+    image_url = db.Column(db.String(255), unique=True, nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'))
+    first = db.Column(db.Integer)
+    first_plural = db.Column(db.Integer)
+    second = db.Column(db.Integer)
+    third = db.Column(db.Integer)
+    word_count = db.Column(db.Integer)
+    unique_words = db.Column(db.Float)
+    alliteration = db.Column(db.Integer)
+    repetitive = db.Column(db.Float)
+    
 
-    def __init__(self, name, api_path):
+    def __init__(self, name, api_path, image_url, year):
         self.name = name
         self.api_path = api_path
+        self.image_url = image_url
+        self.year = year
     
 class Song(db.Model):
     __tablename__ = 'song'
@@ -26,10 +40,28 @@ class Song(db.Model):
     title = db.Column(db.String(255), nullable=False)
     lyrics = db.Column(db.Text, nullable=False)
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+    first = db.Column(db.Integer)
+    first_plural = db.Column(db.Integer)
+    second = db.Column(db.Integer)
+    third = db.Column(db.Integer)
+    word_count = db.Column(db.Integer)
+    unique_words = db.Column(db.Float)
+    alliteration = db.Column(db.Integer)
+    repetitive = db.Column(db.Float)
 
     def __init__(self, title, lyrics):
         self.title = title
         self.lyrics = lyrics
+
+class Genre(db.Model):
+    __tablename__ = 'genre'
+                            
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), nullable=False, unique=True)
+    artists =  db.relationship('Artist', backref="genre")
+
+    def __init__(self, name):
+        self.name = name
 
 class User(db.Model):
 
