@@ -41,17 +41,16 @@ def insert_genres():
             db.session.add(gen)
             db.session.commit()
         except:
+            print('could not add genre ' + name)
             db.session.rollback()
             break
         
 def create_training_data():
     top_artists = get_top_artists()
-    #i = 0
+
     for artist, year in top_artists.items():
-        #if i == 30: break
-        #i += 1
         if not Artist.query.filter_by(name=artist.title()).first():
-            if get_artist_info(artist.title(), year):
+            if store_artist_info(artist.title(), year):
                 print('stored %s in database' % artist.title())
             else:
                 print('could not find ' + artist)
@@ -59,6 +58,8 @@ def create_training_data():
 def get_top_artists():
     artists = {}
     for year in range (1970, 2017):
+        if year != 1999:
+            continue
         date = "05-12-" + str(year)
         chart = billboard.ChartData(chart_url, str(year) + "-05-12")
         print("getting year %s" % date)
@@ -140,9 +141,7 @@ def get_all_lyrics(artist):
         params = {'per_page' : 25, 'page' : i, 'sort' : 'popularity'}
         response = requests.get(artist_url, params=params, headers=headers)
         json = response.json()
-        if json['response']['next_page'] == None:
-            print('no next page')
-            break
+        print(json)
         for song in json['response']['songs']:
             if song['title'] not in song_api_paths:
                 song_api_paths[song['title']] = song['api_path']
@@ -157,9 +156,17 @@ def get_all_lyrics(artist):
         try:
             db.session.add(song)
             artist.songs.append(song)
+            db.session.commit()
         except:
+            print('could not add song ' + title + ", trying to delete then re-add")
             db.session.rollback()
-            print("Unexpected error:", sys.exc_info()[0])
+            try:
+                old_song = Song.query.filter_by(title=title).first()
+                db.session.delete(old_song)
+                db.session.commit()
+                db.session.add(song)
+            except:
+                print('no dice')
             
 def get_artist_genre(artist):
     # this one has to be first
@@ -189,7 +196,8 @@ def get_artist_genre(artist):
     except KeyError:
         pass
 
-def get_artist_info(artist, year):
+def store_artist_info(artist, year):
+    print(artist)
     found_artist = False
     params = {'q' : artist}
     response = requests.get(search_url, params=params, headers=headers)
@@ -211,11 +219,14 @@ def get_artist_info(artist, year):
                 get_artist_genre(artist)
                 get_all_lyrics(artist)
                 print('stored artist and songs in db')
+                return artist
             except:
-                print('artist not stored-- rollback')
+                print('artist  not stored-- rollback')
                 db.session.rollback()
                 print("Unexpected error:", sys.exc_info()[0])
-            break
+                break
+    return None
+            
     
-    return found_artist
+   
 
